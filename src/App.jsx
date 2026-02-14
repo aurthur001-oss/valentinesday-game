@@ -454,8 +454,7 @@ function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  const onLeftBtn = (e) => { e.preventDefault(); handleAction('left'); };
-  const onRightBtn = (e) => { e.preventDefault(); handleAction('right'); };
+
 
   // --- RENDER ---
   if (gameState === 'onboarding') {
