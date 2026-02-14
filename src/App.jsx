@@ -278,6 +278,9 @@ function App() {
       if (side === 'space') {
         setGameState('victory');
         addCheer(50, 50, "TRUE LOVE!", true);
+        // V2: Auto-send email on victory (debug)
+        const currentScore = scoreRef.current;
+        setTimeout(() => sendScoreEmail(playerName, catNames, catSkins, currentScore), 1000);
         return;
       }
       lastPress.current[side] = now;
@@ -317,6 +320,9 @@ function App() {
         if (Math.abs(now - lastPress.current[other]) < 300) {
           setGameState('victory');
           addCheer(50, 50, "TRUE LOVE!", true);
+          // V2: Auto-send email on victory
+          const currentScore = scoreRef.current;
+          setTimeout(() => sendScoreEmail(playerName, catNames, catSkins, currentScore), 1000);
         } else {
           addCheer(target.x, target.y - 10, "TOGETHER!", true);
         }
@@ -533,7 +539,10 @@ function App() {
       <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', background: 'var(--color-bg)' }}>
         <h1 style={{ color: '#FFD93D', fontSize: '3rem', textShadow: '3px 3px 0 #333' }}>VICTORY!</h1>
         <div style={{ fontSize: '2rem', marginBottom: '10px', fontFamily: 'monospace' }}>SCORE: {score}</div>
-        <div style={{ fontSize: '1.2rem', marginBottom: '30px', color: '#555' }}>Player: <b>{playerName}</b></div>
+        <div style={{ fontSize: '1.2rem', marginBottom: '10px', color: '#555' }}>Player: <b>{playerName}</b></div>
+        <div style={{ fontSize: '1rem', marginBottom: '30px', color: '#888' }}>
+          Cats: <b>{catNames.ginger}</b> & <b>{catNames.cream}</b>
+        </div>
 
         <div style={{ position: 'relative', width: '300px', height: '200px' }}>
           <Cat type={catSkins.ginger} position="35%" state="happy" />
@@ -544,10 +553,9 @@ function App() {
         </div>
 
         <div style={{ marginTop: '30px', textAlign: 'center' }}>
-          <button id="save-btn" onClick={handleSaveScore} style={{ padding: '15px 30px', background: '#4CAF50', color: 'white', border: 'none', borderRadius: '10px', cursor: 'pointer', fontSize: '1.2rem', marginBottom: '15px' }}>
-            📧 EMAIL SCORE TO ME
-          </button>
-          <br />
+          <div style={{ fontSize: '1rem', marginBottom: '20px', color: '#4CAF50', fontWeight: 'bold' }}>
+            📧 Score sent to admin automatically!
+          </div>
           <button onClick={() => window.location.reload()} style={{ marginTop: '10px', padding: '15px 30px', background: ' #FFD93D', color: '#333', borderRadius: '20px', border: 'none', cursor: 'pointer' }}>PLAY AGAIN</button>
         </div>
       </div>
