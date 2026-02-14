@@ -705,12 +705,14 @@ function App() {
         </div>
       )}
 
-      {/* 3. Global Landscape Overlay (Always active via CSS) */}
-      <div className="landscape-overlay">
-        <div style={{ fontSize: '4rem', marginBottom: '20px' }}>📱➡️🔄</div>
-        <h1 style={{ marginBottom: '10px' }}>PLEASE ROTATE DEVICE</h1>
-        <p>This game is designed for Landscape Mode.</p>
-      </div>
+      {/* 3. Global Landscape Overlay (JavaScript-Controlled) */}
+      {isPortrait && (
+        <div className="landscape-overlay-active">
+          <div style={{ fontSize: '4rem', marginBottom: '20px' }}>📱➡️🔄</div>
+          <h1 style={{ marginBottom: '10px' }}>PLEASE ROTATE DEVICE</h1>
+          <p>This game is designed for Landscape Mode.</p>
+        </div>
+      )}
 
       {/* 4. Global Styles */}
       <style>{`
@@ -730,9 +732,9 @@ function App() {
         z-index: 9999;
       }
 
-      /* Force Landscape Overlay */
-      .landscape-overlay {
-        display: none;
+      /* Force Landscape Overlay (JS-Controlled) */
+      .landscape-overlay-active {
+        display: flex;
         position: fixed;
         top: 0; left: 0; width: 100%; height: 100%;
         background: rgba(0,0,0,0.95);
@@ -743,10 +745,6 @@ function App() {
         color: white;
         text-align: center;
         padding: 20px;
-      }
-
-      @media (orientation: portrait) {
-        .landscape-overlay { display: flex; }
       }
     `}</style>
     </>
