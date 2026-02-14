@@ -670,35 +670,35 @@ function App() {
       {gameState === 'playing' && (
         <div className="mobile-controls">
           {/* Left Control */}
-          <div style={{ pointerEvents: 'auto', position: 'absolute', bottom: '20px', left: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div style={{ pointerEvents: 'auto', position: 'absolute', bottom: '10px', left: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <button onPointerDown={onLeftBtn} className="control-btn" style={{
-              width: '120px', height: '120px', borderRadius: '50%',
-              background: '#FFB38A', border: '4px solid white',
-              fontSize: '1rem', fontWeight: 'bold', color: 'white',
-              boxShadow: '0 5px 0 #C4765A',
+              width: 'min(80px, 15vh)', height: 'min(80px, 15vh)', borderRadius: '50%',
+              background: '#FFB38A', border: '3px solid white',
+              fontSize: '0.8rem', fontWeight: 'bold', color: 'white',
+              boxShadow: '0 3px 0 #C4765A',
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
               touchAction: 'none'
             }}>
-              {catNames.ginger} <span style={{ fontSize: '1.5rem', fontWeight: '900' }}>(A)</span>
+              {catNames.ginger} <span style={{ fontSize: '1.2rem', fontWeight: '900' }}>(A)</span>
             </button>
-            <div style={{ marginTop: '5px', fontSize: '1.2rem', textShadow: '1px 1px 0 white' }}>
+            <div style={{ marginTop: '3px', fontSize: '1rem', textShadow: '1px 1px 0 white' }}>
               {Array.from({ length: gingerLives }).map((_, i) => <span key={i}>❤️</span>)} {gingerLives === 0 && '💀'}
             </div>
           </div>
 
           {/* Right Control */}
-          <div style={{ pointerEvents: 'auto', position: 'absolute', bottom: '20px', right: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div style={{ pointerEvents: 'auto', position: 'absolute', bottom: '10px', right: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <button onPointerDown={onRightBtn} className="control-btn" style={{
-              width: '120px', height: '120px', borderRadius: '50%',
-              background: '#FDF0D5', border: '4px solid white',
-              fontSize: '1rem', fontWeight: 'bold', color: '#5D4037',
-              boxShadow: '0 5px 0 #C4AA7A',
+              width: 'min(80px, 15vh)', height: 'min(80px, 15vh)', borderRadius: '50%',
+              background: '#FDF0D5', border: '3px solid white',
+              fontSize: '0.8rem', fontWeight: 'bold', color: '#5D4037',
+              boxShadow: '0 3px 0 #C4AA7A',
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
               touchAction: 'none'
             }}>
-              {catNames.cream} <span style={{ fontSize: '1.5rem', fontWeight: '900' }}>(D)</span>
+              {catNames.cream} <span style={{ fontSize: '1.2rem', fontWeight: '900' }}>(D)</span>
             </button>
-            <div style={{ marginTop: '5px', fontSize: '1.2rem', textShadow: '1px 1px 0 white' }}>
+            <div style={{ marginTop: '3px', fontSize: '1rem', textShadow: '1px 1px 0 white' }}>
               {Array.from({ length: creamLives }).map((_, i) => <span key={i}>❤️</span>)} {creamLives === 0 && '💀'}
             </div>
           </div>
