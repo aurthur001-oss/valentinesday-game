@@ -76,6 +76,15 @@ function App() {
   const [gingerState, setGingerState] = useState('idle');
   const [creamState, setCreamState] = useState('idle');
   const [shake, setShake] = useState(false);
+
+  // V2 Mobile: Landscape Check
+  const [isPortrait, setIsPortrait] = useState(window.innerHeight > window.innerWidth);
+
+  useEffect(() => {
+    const checkOrientation = () => setIsPortrait(window.innerHeight > window.innerWidth);
+    window.addEventListener('resize', checkOrientation);
+    return () => window.removeEventListener('resize', checkOrientation);
+  }, []);
   const [finalHeartActive, setFinalHeartActive] = useState(false);
 
   // REFS
@@ -577,7 +586,7 @@ function App() {
   }
 
   return (
-    <div className={`game-container ${shake ? 'shake' : ''}`} style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden' }}>
+    <div className={`game-container ${shake ? 'shake' : ''}`} style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden', touchAction: 'none' }}>
       {/* V2 HUD */}
       <div style={{ position: 'absolute', top: 10, width: '100%', textAlign: 'center', zIndex: 50, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <div style={{ display: 'flex', gap: '20px', alignItems: 'center', background: 'rgba(255,255,255,0.8)', padding: '5px 20px', borderRadius: '20px', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }}>
@@ -629,20 +638,56 @@ function App() {
         <CheerleaderSystem cheers={cheers} />
       </div>
 
-      <div style={{ position: 'absolute', bottom: 20, width: '100%', display: 'flex', justifyContent: 'space-between', padding: '0 20px', zIndex: 100 }}>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <button onPointerDown={onLeftBtn} className="control-btn" style={{ width: '100px', height: '100px', borderRadius: '50%', background: '#FFB38A', border: '4px solid white', fontSize: '0.9rem', fontWeight: 'bold', color: 'white', boxShadow: '0 5px 0 #C4765A', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-            {catNames.ginger} <span style={{ fontSize: '1.3rem', fontWeight: '900' }}>(A)</span>
+    </div>
+
+      {/* V2 Mobile: Force Landscape Overlay */ }
+  {
+    isPortrait && (
+      <div style={{
+        position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
+        background: 'rgba(0,0,0,0.9)', zIndex: 9999,
+        display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
+        color: 'white', textAlign: 'center', padding: '20px'
+      }}>
+        <div style={{ fontSize: '4rem', marginBottom: '20px' }}>📱➡️🔄</div>
+        <h1 style={{ marginBottom: '10px' }}>PLEASE ROTATE DEVICE</h1>
+        <p>This game is designed for Landscape Mode.</p>
+      </div>
+    )
+  }
+
+  {/* V2 Mobile: Optimized Controls (Fixed Positioning) */ }
+      <div style={{ pointerEvents: 'none', position: 'fixed', bottom: 20, width: '100%', height: '100%', zIndex: 100 }}>
+        {/* Left Control */}
+        <div style={{ pointerEvents: 'auto', position: 'absolute', bottom: '20px', left: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <button onPointerDown={onLeftBtn} className="control-btn" style={{ 
+            width: '120px', height: '120px', borderRadius: '50%', 
+            background: '#FFB38A', border: '4px solid white', 
+            fontSize: '1rem', fontWeight: 'bold', color: 'white', 
+            boxShadow: '0 5px 0 #C4765A', 
+            display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+            touchAction: 'none'
+          }}>
+            {catNames.ginger} <span style={{ fontSize: '1.5rem', fontWeight: '900' }}>(A)</span>
           </button>
-          <div style={{ marginTop: '10px', fontSize: '1.5rem' }}>
+          <div style={{ marginTop: '5px', fontSize: '1.2rem', textShadow: '1px 1px 0 white' }}>
             {Array.from({ length: gingerLives }).map((_, i) => <span key={i}>❤️</span>)} {gingerLives === 0 && '💀'}
           </div>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <button onPointerDown={onRightBtn} className="control-btn" style={{ width: '100px', height: '100px', borderRadius: '50%', background: '#FDF0D5', border: '4px solid white', fontSize: '0.9rem', fontWeight: 'bold', color: '#5D4037', boxShadow: '0 5px 0 #C4AA7A', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-            {catNames.cream} <span style={{ fontSize: '1.3rem', fontWeight: '900' }}>(D)</span>
+
+        {/* Right Control */}
+        <div style={{ pointerEvents: 'auto', position: 'absolute', bottom: '20px', right: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <button onPointerDown={onRightBtn} className="control-btn" style={{ 
+            width: '120px', height: '120px', borderRadius: '50%', 
+            background: '#FDF0D5', border: '4px solid white', 
+            fontSize: '1rem', fontWeight: 'bold', color: '#5D4037', 
+            boxShadow: '0 5px 0 #C4AA7A', 
+            display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+            touchAction: 'none'
+          }}>
+            {catNames.cream} <span style={{ fontSize: '1.5rem', fontWeight: '900' }}>(D)</span>
           </button>
-          <div style={{ marginTop: '10px', fontSize: '1.5rem' }}>
+          <div style={{ marginTop: '5px', fontSize: '1.2rem', textShadow: '1px 1px 0 white' }}>
             {Array.from({ length: creamLives }).map((_, i) => <span key={i}>❤️</span>)} {creamLives === 0 && '💀'}
           </div>
         </div>
@@ -654,7 +699,7 @@ function App() {
         @keyframes shake-anim { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
       `}</style>
-    </div>
+    </div >
   );
 }
 
