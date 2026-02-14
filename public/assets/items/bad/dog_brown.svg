@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Body -->
+  <rect x="25" y="40" width="50" height="40" rx="20" ry="20" fill="#D7CCC8" stroke="#8D6E63" stroke-width="3"/>
+  <!-- Head -->
+  <circle cx="50" cy="40" r="25" fill="#D7CCC8" stroke="#8D6E63" stroke-width="3"/>
+  <!-- Ears -->
+  <path d="M25,25 Q15,40 25,45" fill="#8D6E63" stroke="#5D4037" stroke-width="2"/>
+  <path d="M75,25 Q85,40 75,45" fill="#8D6E63" stroke="#5D4037" stroke-width="2"/>
+  <!-- Eyes -->
+  <circle cx="40" cy="38" r="4" fill="#3E2723"/>
+  <circle cx="60" cy="38" r="4" fill="#3E2723"/>
+  <!-- Cheeks -->
+  <circle cx="35" cy="43" r="3" fill="#FFAB91" opacity="0.6"/>
+  <circle cx="65" cy="43" r="3" fill="#FFAB91" opacity="0.6"/>
+  <!-- Nose/Mouth -->
+  <circle cx="50" cy="42" r="3" fill="#3E2723"/>
+  <path d="M47,48 Q50,50 53,48" fill="none" stroke="#3E2723" stroke-width="2" stroke-linecap="round"/>
+  <!-- Tail -->
+  <path d="M70,70 Q80,60 85,70" fill="none" stroke="#8D6E63" stroke-width="4" stroke-linecap="round"/>
+</svg>

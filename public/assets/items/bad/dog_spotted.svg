@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Body -->
+  <rect x="25" y="40" width="50" height="40" rx="20" ry="20" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="3"/>
+  <!-- Spots using circles clipped or just placed -->
+  <circle cx="35" cy="55" r="5" fill="#424242"/>
+  <circle cx="60" cy="65" r="4" fill="#424242"/>
+  <circle cx="50" cy="70" r="3" fill="#424242"/>
+  
+  <!-- Head -->
+  <circle cx="50" cy="40" r="25" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="3"/>
+  <!-- Ear Left - Black -->
+  <path d="M25,25 Q15,40 25,45" fill="#424242" stroke="#212121" stroke-width="2"/>
+  <!-- Ear Right - White -->
+  <path d="M75,25 Q85,40 75,45" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="2"/>
+  
+  <!-- Eyes -->
+  <circle cx="40" cy="38" r="4" fill="#424242"/>
+  <circle cx="60" cy="38" r="4" fill="#424242"/>
+  <!-- Cheeks -->
+  <circle cx="35" cy="43" r="3" fill="#F48FB1" opacity="0.6"/>
+  <circle cx="65" cy="43" r="3" fill="#F48FB1" opacity="0.6"/>
+  <!-- Nose/Mouth -->
+  <circle cx="50" cy="42" r="3" fill="#424242"/>
+  <path d="M47,48 Q50,50 53,48" fill="none" stroke="#424242" stroke-width="2" stroke-linecap="round"/>
+</svg>
