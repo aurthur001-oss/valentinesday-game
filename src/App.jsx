@@ -589,78 +589,72 @@ function App() {
   }
 
   return (
-    <div className={`game-container ${shake ? 'shake' : ''}`} style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden', touchAction: 'none' }}>
-      {/* V2 HUD */}
-      <div style={{ position: 'absolute', top: 10, width: '100%', textAlign: 'center', zIndex: 50, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <div style={{ display: 'flex', gap: '20px', alignItems: 'center', background: 'rgba(255,255,255,0.8)', padding: '5px 20px', borderRadius: '20px', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }}>
-          <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#333' }}>SCORE: {score}</div>
-          <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#666' }}>LEVEL: {level}</div>
+    <>
+      <div className={`game-container ${shake ? 'shake' : ''}`} style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden', touchAction: 'none' }}>
+        {/* V2 HUD */}
+        <div style={{ position: 'absolute', top: 10, width: '100%', textAlign: 'center', zIndex: 50, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: '20px', alignItems: 'center', background: 'rgba(255,255,255,0.8)', padding: '5px 20px', borderRadius: '20px', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }}>
+            <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#333' }}>SCORE: {score}</div>
+            <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#666' }}>LEVEL: {level}</div>
+          </div>
+
+          <h1 style={{ margin: '10px 0 0 0', color: '#5D4037', fontSize: '1.5rem' }}>SYNC METER</h1>
+          <div style={{ width: '60%', height: '20px', background: '#ddd', margin: '5px auto', borderRadius: '10px', overflow: 'hidden', border: '2px solid #5D4037' }}>
+            <div style={{ height: '100%', width: `${((gingerProgress + creamProgress) / (MAX_SCORE * 2)) * 100}%`, background: 'linear-gradient(90deg, #FFB38A, #FDF0D5)', transition: 'width 0.2s', position: 'relative' }}>
+            </div>
+          </div>
+          {finalHeartActive && (
+            <div style={{
+              position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+              color: '#FF0000', fontWeight: 'bold', fontSize: '2rem', textShadow: '2px 2px white',
+              animation: 'pulse 0.5s infinite', pointerEvents: 'none', zIndex: 200, textAlign: 'center'
+            }}>
+              FINAL JUMP! <br /> CATCH HEART TOGETHER!
+            </div>
+          )}
         </div>
 
-        <h1 style={{ margin: '10px 0 0 0', color: '#5D4037', fontSize: '1.5rem' }}>SYNC METER</h1>
-        <div style={{ width: '60%', height: '20px', background: '#ddd', margin: '5px auto', borderRadius: '10px', overflow: 'hidden', border: '2px solid #5D4037' }}>
-          <div style={{ height: '100%', width: `${((gingerProgress + creamProgress) / (MAX_SCORE * 2)) * 100}%`, background: 'linear-gradient(90deg, #FFB38A, #FDF0D5)', transition: 'width 0.2s', position: 'relative' }}>
-          </div>
-        </div>
-        {finalHeartActive && (
+        <div style={{ position: 'absolute', inset: 0, zIndex: 10 }}>
+          {targets.map(t => (
+            <Target key={t.id} type={t.type} x={`${t.x}%`} y={`${t.y}%`} rotation={t.rotation} />
+          ))}
+
           <div style={{
-            position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
-            color: '#FF0000', fontWeight: 'bold', fontSize: '2rem', textShadow: '2px 2px white',
-            animation: 'pulse 0.5s infinite', pointerEvents: 'none', zIndex: 200, textAlign: 'center'
+            position: 'absolute',
+            left: `${gingerPos}%`,
+            bottom: '15%',
+            transform: 'translateX(-50%)',
+            transition: 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
           }}>
-            FINAL JUMP! <br /> CATCH HEART TOGETHER!
+            <Cat type={catSkins.ginger} position="0" state={gingerState} />
           </div>
-        )}
+
+          <div style={{
+            position: 'absolute',
+            left: `${creamPos}%`,
+            bottom: '15%',
+            transform: 'translateX(-50%)',
+            transition: 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+          }}>
+            <Cat type={catSkins.cream} position="0" state={creamState} />
+          </div>
+
+          <CheerleaderSystem cheers={cheers} />
+        </div>
+
+
+
+      </div >
+
+      {/* V2 Mobile: Force Landscape Overlay (CSS Based) */}
+      <div className="landscape-overlay">
+        <div style={{ fontSize: '4rem', marginBottom: '20px' }}>📱➡️🔄</div>
+        <h1 style={{ marginBottom: '10px' }}>PLEASE ROTATE DEVICE</h1>
+        <p>This game is designed for Landscape Mode.</p>
       </div>
 
-      <div style={{ position: 'absolute', inset: 0, zIndex: 10 }}>
-        {targets.map(t => (
-          <Target key={t.id} type={t.type} x={`${t.x}%`} y={`${t.y}%`} rotation={t.rotation} />
-        ))}
-
-        <div style={{
-          position: 'absolute',
-          left: `${gingerPos}%`,
-          bottom: '15%',
-          transform: 'translateX(-50%)',
-          transition: 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
-        }}>
-          <Cat type={catSkins.ginger} position="0" state={gingerState} />
-        </div>
-
-        <div style={{
-          position: 'absolute',
-          left: `${creamPos}%`,
-          bottom: '15%',
-          transform: 'translateX(-50%)',
-          transition: 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
-        }}>
-          <Cat type={catSkins.cream} position="0" state={creamState} />
-        </div>
-
-        <CheerleaderSystem cheers={cheers} />
-      </div>
-
-
-
-      {/* V2 Mobile: Force Landscape Overlay */}
-      {
-        isPortrait && (
-          <div style={{
-            position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
-            background: 'rgba(0,0,0,0.9)', zIndex: 9999,
-            display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
-            color: 'white', textAlign: 'center', padding: '20px'
-          }}>
-            <div style={{ fontSize: '4rem', marginBottom: '20px' }}>📱➡️🔄</div>
-            <h1 style={{ marginBottom: '10px' }}>PLEASE ROTATE DEVICE</h1>
-            <p>This game is designed for Landscape Mode.</p>
-          </div>
-        )
-      }
-
-      {/* V2 Mobile: Optimized Controls (Fixed Positioning) */}
-      <div style={{ pointerEvents: 'none', position: 'fixed', bottom: 20, width: '100%', height: '100%', zIndex: 100 }}>
+      {/* V2 Mobile: Optimized Controls (Fixed Viewport) */}
+      <div className="mobile-controls">
         {/* Left Control */}
         <div style={{ pointerEvents: 'auto', position: 'absolute', bottom: '20px', left: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <button onPointerDown={onLeftBtn} className="control-btn" style={{
@@ -697,12 +691,42 @@ function App() {
       </div>
 
       <style>{`
-        .control-btn:active { transform: translateY(5px); box-shadow: 0 0 0 transparent; }
-        .shake { animation: shake-anim 0.2s; }
-        @keyframes shake-anim { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
-      `}</style>
-    </div >
+      .control-btn:active { transform: translateY(5px); box-shadow: 0 0 0 transparent; }
+      .shake { animation: shake-anim 0.2s; }
+      @keyframes shake-anim { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+      @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+      
+      /* Mobile Controls Container */
+      .mobile-controls {
+        pointer-events: none;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+      }
+
+      /* Force Landscape Overlay */
+      .landscape-overlay {
+        display: none;
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.95);
+        z-index: 10000;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        text-align: center;
+        padding: 20px;
+      }
+
+      @media (orientation: portrait) {
+        .landscape-overlay { display: flex; }
+      }
+    `}</style>
+    </>
   );
 }
 
