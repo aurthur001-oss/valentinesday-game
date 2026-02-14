@@ -642,33 +642,33 @@ function App() {
         <CheerleaderSystem cheers={cheers} />
       </div>
 
-    </div>
 
-      {/* V2 Mobile: Force Landscape Overlay */ }
-  {
-    isPortrait && (
-      <div style={{
-        position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
-        background: 'rgba(0,0,0,0.9)', zIndex: 9999,
-        display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
-        color: 'white', textAlign: 'center', padding: '20px'
-      }}>
-        <div style={{ fontSize: '4rem', marginBottom: '20px' }}>📱➡️🔄</div>
-        <h1 style={{ marginBottom: '10px' }}>PLEASE ROTATE DEVICE</h1>
-        <p>This game is designed for Landscape Mode.</p>
-      </div>
-    )
-  }
 
-  {/* V2 Mobile: Optimized Controls (Fixed Positioning) */ }
+      {/* V2 Mobile: Force Landscape Overlay */}
+      {
+        isPortrait && (
+          <div style={{
+            position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
+            background: 'rgba(0,0,0,0.9)', zIndex: 9999,
+            display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
+            color: 'white', textAlign: 'center', padding: '20px'
+          }}>
+            <div style={{ fontSize: '4rem', marginBottom: '20px' }}>📱➡️🔄</div>
+            <h1 style={{ marginBottom: '10px' }}>PLEASE ROTATE DEVICE</h1>
+            <p>This game is designed for Landscape Mode.</p>
+          </div>
+        )
+      }
+
+      {/* V2 Mobile: Optimized Controls (Fixed Positioning) */}
       <div style={{ pointerEvents: 'none', position: 'fixed', bottom: 20, width: '100%', height: '100%', zIndex: 100 }}>
         {/* Left Control */}
         <div style={{ pointerEvents: 'auto', position: 'absolute', bottom: '20px', left: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <button onPointerDown={onLeftBtn} className="control-btn" style={{ 
-            width: '120px', height: '120px', borderRadius: '50%', 
-            background: '#FFB38A', border: '4px solid white', 
-            fontSize: '1rem', fontWeight: 'bold', color: 'white', 
-            boxShadow: '0 5px 0 #C4765A', 
+          <button onPointerDown={onLeftBtn} className="control-btn" style={{
+            width: '120px', height: '120px', borderRadius: '50%',
+            background: '#FFB38A', border: '4px solid white',
+            fontSize: '1rem', fontWeight: 'bold', color: 'white',
+            boxShadow: '0 5px 0 #C4765A',
             display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
             touchAction: 'none'
           }}>
@@ -681,11 +681,11 @@ function App() {
 
         {/* Right Control */}
         <div style={{ pointerEvents: 'auto', position: 'absolute', bottom: '20px', right: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <button onPointerDown={onRightBtn} className="control-btn" style={{ 
-            width: '120px', height: '120px', borderRadius: '50%', 
-            background: '#FDF0D5', border: '4px solid white', 
-            fontSize: '1rem', fontWeight: 'bold', color: '#5D4037', 
-            boxShadow: '0 5px 0 #C4AA7A', 
+          <button onPointerDown={onRightBtn} className="control-btn" style={{
+            width: '120px', height: '120px', borderRadius: '50%',
+            background: '#FDF0D5', border: '4px solid white',
+            fontSize: '1rem', fontWeight: 'bold', color: '#5D4037',
+            boxShadow: '0 5px 0 #C4AA7A',
             display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
             touchAction: 'none'
           }}>
