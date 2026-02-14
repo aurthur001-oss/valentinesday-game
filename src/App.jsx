@@ -435,6 +435,10 @@ function App() {
 
   const triggerShake = () => { setShake(true); setTimeout(() => setShake(false), 200); };
 
+  // V2 Mobile: Touch Handlers
+  const onLeftBtn = (e) => { e.preventDefault(); handleAction('left'); };
+  const onRightBtn = (e) => { e.preventDefault(); handleAction('right'); };
+
   // --- Handlers ---
   useEffect(() => {
     const handleKeyDown = (e) => {
