@@ -511,37 +511,52 @@ function App() {
           <style>{`
                   .cat-selector {
                       display: flex; flexDirection: column; alignItems: center;
-                      background: white; padding: 20px; borderRadius: 20px;
+                      background: white; padding: 2vh 2vw; borderRadius: 20px;
                       box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+                      transform: scale(0.9); /* Default slightly smaller */
                   }
-                  .cat-label { marginBottom: 10px; fontWeight: bold; color: #5D4037; letter-spacing: 1px; }
+                  .cat-label { marginBottom: 5px; fontWeight: bold; color: #5D4037; letter-spacing: 1px; fontSize: 1rem; }
                   .cat-preview {
-                      width: 120px; height: 120px; marginBottom: 15px;
+                      width: 10vh; height: 10vh; marginBottom: 10px; /* Responsive based on height */
+                      min-width: 80px; min-height: 80px;
                       display: flex; justifyContent: center; alignItems: center;
                       transform: scale(1); transition: transform 0.2s;
                   }
                   .cat-selector:hover .cat-preview { transform: scale(1.1); }
-                  .controls { display: flex; align-items: center; gap: 10px; marginBottom: 15px; }
+                  .controls { display: flex; align-items: center; gap: 5px; marginBottom: 10px; }
                   .arrow-btn {
-                      background: #f0f0f0; border: none; font-size: 1.2rem; cursor: pointer;
-                      width: 40px; height: 40px; borderRadius: 50%;
+                      background: #f0f0f0; border: none; font-size: 1rem; cursor: pointer;
+                      width: 30px; height: 30px; borderRadius: 50%;
                       transition: background 0.2s, transform 0.1s;
                   }
                   .arrow-btn:hover { background: #e0e0e0; transform: scale(1.1); }
-                  .skin-name { font-weight: bold; color: #888; text-transform: uppercase; font-size: 0.9rem; width: 60px; text-align: center; }
+                  .skin-name { font-weight: bold; color: #888; text-transform: uppercase; font-size: 0.8rem; width: 60px; text-align: center; }
                   .name-input {
-                      padding: 10px; border: 2px solid #eee; borderRadius: 10px;
-                      text-align: center; font-size: 1rem; color: #555; width: 140px;
+                      padding: 8px; border: 2px solid #eee; borderRadius: 10px;
+                      text-align: center; font-size: 0.9rem; color: #555; width: 120px;
                   }
                   .name-input:focus { outline: none; border-color: #FF8BA7; }
                   .start-btn {
-                      padding: 15px 50px; fontSize: 1.5rem; background: #FF8BA7;
+                      padding: 10px 40px; fontSize: 1.2rem; background: #FF8BA7;
                       color: white; border: none; borderRadius: 50px; cursor: pointer;
                       box-shadow: 0 5px 15px rgba(255,139,167,0.4);
                       transition: all 0.2s;
+                      margin-top: 10px;
                   }
                   .start-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(255,139,167,0.6); }
                   .start-btn:active { transform: translateY(1px); }
+
+                  /* Mobile Landscape Specific Adjustments */
+                  @media (max-height: 500px) {
+                    .cat-selector { padding: 10px; transform: scale(0.85); margin: 0 5px; }
+                    .cat-preview { width: 8vh; height: 8vh; min-width: 60px; min-height: 60px; marginBottom: 5px; }
+                    h1 { font-size: 1.8rem !important; margin-bottom: 0.5rem !important; }
+                    p { margin-bottom: 0.5rem !important; display: none; } /* Hide subtext on small screens */
+                    input[type="text"] { padding: 8px !important; width: 200px !important; }
+                    .start-btn { padding: 8px 30px; fontSize: 1rem; }
+                    /* Make layout horizontal if needed */
+                    .cat-selector { flex-direction: column; } 
+                  }
               `}</style>
         </div>
       );
