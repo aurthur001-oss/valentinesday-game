@@ -80,6 +80,10 @@ function App() {
   // V2 Mobile: Landscape Check
   const [isPortrait, setIsPortrait] = useState(window.innerHeight > window.innerWidth);
 
+  // Mobile Tutorial & Feedback
+  const [showTutorial, setShowTutorial] = useState(() => !localStorage.getItem('tapTutorialSeen'));
+  const [tapFeedback, setTapFeedback] = useState({ left: false, right: false });
+
   useEffect(() => {
     const checkOrientation = () => setIsPortrait(window.innerHeight > window.innerWidth);
     window.addEventListener('resize', checkOrientation);
@@ -666,43 +670,123 @@ function App() {
       {/* 1. The Game Content (changes based on state) */}
       {renderContent()}
 
-      {/* 2. Global Mobile Controls (Only present in playing state) */}
+      {/* 2. Mobile Tap Zones (Playing State Only) */}
       {gameState === 'playing' && (
-        <div className="mobile-controls">
-          {/* Left Control */}
-          <div style={{ pointerEvents: 'auto', position: 'absolute', bottom: '10px', left: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <button onPointerDown={onLeftBtn} className="control-btn" style={{
-              width: 'min(80px, 15vh)', height: 'min(80px, 15vh)', borderRadius: '50%',
-              background: '#FFB38A', border: '3px solid white',
-              fontSize: '0.8rem', fontWeight: 'bold', color: 'white',
-              boxShadow: '0 3px 0 #C4765A',
-              display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-              touchAction: 'none'
-            }}>
-              {catNames.ginger} <span style={{ fontSize: '1.2rem', fontWeight: '900' }}>(A)</span>
-            </button>
-            <div style={{ marginTop: '3px', fontSize: '1rem', textShadow: '1px 1px 0 white' }}>
+        <>
+          {/* Lives Display - Top Corners */}
+          <div style={{ position: 'fixed', top: '10px', left: '10px', zIndex: 10001, display: 'flex', flexDirection: 'column', alignItems: 'center', pointerEvents: 'none' }}>
+            <div style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#FFB38A', textShadow: '1px 1px 2px rgba(0,0,0,0.5)', marginBottom: '5px' }}>{catNames.ginger}</div>
+            <div style={{ fontSize: '1.3rem' }}>
               {Array.from({ length: gingerLives }).map((_, i) => <span key={i}>❤️</span>)} {gingerLives === 0 && '💀'}
             </div>
           </div>
 
-          {/* Right Control */}
-          <div style={{ pointerEvents: 'auto', position: 'absolute', bottom: '10px', right: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <button onPointerDown={onRightBtn} className="control-btn" style={{
-              width: 'min(80px, 15vh)', height: 'min(80px, 15vh)', borderRadius: '50%',
-              background: '#FDF0D5', border: '3px solid white',
-              fontSize: '0.8rem', fontWeight: 'bold', color: '#5D4037',
-              boxShadow: '0 3px 0 #C4AA7A',
-              display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-              touchAction: 'none'
-            }}>
-              {catNames.cream} <span style={{ fontSize: '1.2rem', fontWeight: '900' }}>(D)</span>
-            </button>
-            <div style={{ marginTop: '3px', fontSize: '1rem', textShadow: '1px 1px 0 white' }}>
+          <div style={{ position: 'fixed', top: '10px', right: '10px', zIndex: 10001, display: 'flex', flexDirection: 'column', alignItems: 'center', pointerEvents: 'none' }}>
+            <div style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#FDF0D5', textShadow: '1px 1px 2px rgba(0,0,0,0.5)', marginBottom: '5px' }}>{catNames.cream}</div>
+            <div style={{ fontSize: '1.3rem' }}>
               {Array.from({ length: creamLives }).map((_, i) => <span key={i}>❤️</span>)} {creamLives === 0 && '💀'}
             </div>
           </div>
-        </div>
+
+          {/* Left Tap Zone (Invisible) */}
+          <div
+            onPointerDown={(e) => {
+              onLeftBtn(e);
+              setTapFeedback(prev => ({ ...prev, left: true }));
+              setTimeout(() => setTapFeedback(prev => ({ ...prev, left: false })), 150);
+              if (showTutorial) {
+                setShowTutorial(false);
+                localStorage.setItem('tapTutorialSeen', 'true');
+              }
+            }}
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '50%',
+              height: '100%',
+              zIndex: 10000,
+              cursor: 'pointer',
+              touchAction: 'none',
+              background: tapFeedback.left ? 'rgba(255, 179, 138, 0.2)' : 'transparent',
+              transition: 'background 0.15s'
+            }}
+          />
+
+          {/* Right Tap Zone (Invisible) */}
+          <div
+            onPointerDown={(e) => {
+              onRightBtn(e);
+              setTapFeedback(prev => ({ ...prev, right: true }));
+              setTimeout(() => setTapFeedback(prev => ({ ...prev, right: false })), 150);
+              if (showTutorial) {
+                setShowTutorial(false);
+                localStorage.setItem('tapTutorialSeen', 'true');
+              }
+            }}
+            style={{
+              position: 'fixed',
+              top: 0,
+              right: 0,
+              width: '50%',
+              height: '100%',
+              zIndex: 10000,
+              cursor: 'pointer',
+              touchAction: 'none',
+              background: tapFeedback.right ? 'rgba(253, 240, 213, 0.2)' : 'transparent',
+              transition: 'background 0.15s'
+            }}
+          />
+
+          {/* Tutorial Overlay (First Time Only) */}
+          {showTutorial && (
+            <div style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              zIndex: 15000,
+              background: 'rgba(0, 0, 0, 0.85)',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              color: 'white',
+              textAlign: 'center',
+              padding: '20px'
+            }}>
+              <h1 style={{ fontSize: '2rem', marginBottom: '20px' }}>📱 Mobile Controls</h1>
+              <div style={{ fontSize: '1.2rem', marginBottom: '30px', maxWidth: '90%' }}>
+                <p style={{ marginBottom: '15px' }}>Tap <strong>LEFT HALF</strong> of screen → Control <span style={{ color: '#FFB38A' }}>{catNames.ginger}</span></p>
+                <p style={{ marginBottom: '15px' }}>Tap <strong>RIGHT HALF</strong> of screen → Control <span style={{ color: '#FDF0D5' }}>{catNames.cream}</span></p>
+              </div>
+              <div style={{
+                fontSize: '3rem',
+                marginBottom: '20px',
+                animation: 'pulse 1.5s infinite'
+              }}>👆</div>
+              <button
+                onClick={() => {
+                  setShowTutorial(false);
+                  localStorage.setItem('tapTutorialSeen', 'true');
+                }}
+                style={{
+                  padding: '15px 40px',
+                  fontSize: '1.2rem',
+                  background: '#FF8BA7',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '50px',
+                  cursor: 'pointer',
+                  boxShadow: '0 5px 15px rgba(255, 139, 167, 0.4)'
+                }}
+              >
+                Got It! 👍
+              </button>
+            </div>
+          )}
+        </>
       )}
 
       {/* 3. Global Landscape Overlay (JavaScript-Controlled) */}
