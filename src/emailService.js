@@ -15,12 +15,12 @@ export const sendScoreEmail = async (playerName, catNames, catSkins, score) => {
     console.log("Sending email...", { playerName, score });
 
     const templateParams = {
-        to_name: "Admin", // Your name
+        to_name: "Admin",
         player_name: playerName,
         score: score,
-        left_cat_info: `${catNames.ginger} (${catSkins.ginger})`,
-        right_cat_info: `${catNames.cream} (${catSkins.cream})`,
-        message: `High Score Alert! ${playerName} just scored ${score}!`
+        cat_left: `${catNames.ginger} (${catSkins.ginger})`,
+        cat_right: `${catNames.cream} (${catSkins.cream})`,
+        message: `Player: ${playerName} | Score: ${score} | Cats: ${catNames.ginger} (${catSkins.ginger}) & ${catNames.cream} (${catSkins.cream})`
     };
 
     try {

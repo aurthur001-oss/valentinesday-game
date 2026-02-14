@@ -22,8 +22,8 @@ Or use this simple version:
 ```
 Player: {{player_name}}
 Score: {{score}}
-Left Cat: {{left_cat_info}}
-Right Cat: {{right_cat_info}}
+Left Cat: {{cat_left}}
+Right Cat: {{cat_right}}
 ```
 
 ### 3. Test It!
@@ -41,8 +41,9 @@ Right Cat: {{right_cat_info}}
 4. Make sure the template variables match:
    - `{{player_name}}`
    - `{{score}}`
-   - `{{left_cat_info}}`
-   - `{{right_cat_info}}`
+   - `{{cat_left}}`
+   - `{{cat_right}}`
+   - `{{message}}`
 
 ## What Gets Sent
 - Player name
