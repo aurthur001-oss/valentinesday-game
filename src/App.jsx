@@ -456,140 +456,140 @@ function App() {
 
 
 
-  // --- RENDER ---
-  if (gameState === 'onboarding') {
-    return (
-      <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', background: 'var(--color-bg)', padding: '20px' }}>
-        <h1 style={{ color: '#FF8BA7', fontSize: '2.5rem', marginBottom: '1rem' }}>Kitty Sync V2</h1>
-        <p style={{ marginBottom: '1rem' }}>Select your cats and start!</p>
+  // --- RENDER HELPERS ---
+  const renderContent = () => {
+    if (gameState === 'onboarding') {
+      return (
+        <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', background: 'var(--color-bg)', padding: '20px' }}>
+          <h1 style={{ color: '#FF8BA7', fontSize: '2.5rem', marginBottom: '1rem' }}>Kitty Sync V2</h1>
+          <p style={{ marginBottom: '1rem' }}>Select your cats and start!</p>
 
-        {/* V2: Player Name Input */}
-        <div style={{ marginBottom: '30px', textAlign: 'center' }}>
-          <label style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#5D4037', display: 'block', marginBottom: '10px' }}>YOUR NAME</label>
-          <input
-            type="text"
-            placeholder="Enter your name"
-            value={playerName}
-            onChange={e => setPlayerName(e.target.value)}
-            style={{ padding: '12px 20px', fontSize: '1.1rem', borderRadius: '10px', border: '2px solid #FFD93D', width: '300px', textAlign: 'center', fontWeight: 'bold' }}
-          />
-        </div>
-
-        <div style={{ display: 'flex', gap: '40px', marginBottom: '30px' }}>
-          {/* LEFT CAT SETUP */}
-          <div className="cat-selector">
-            <div className="cat-label">LEFT CAT (A)</div>
-            <div className="cat-preview">
-              <Cat type={catSkins.ginger} position="0" state="idle" />
-            </div>
-            <div className="controls">
-              <button className="arrow-btn" onClick={() => cycleSkin('ginger', -1)}>⬅️</button>
-              <span className="skin-name">{catSkins.ginger}</span>
-              <button className="arrow-btn" onClick={() => cycleSkin('ginger', 1)}>➡️</button>
-            </div>
-            <input type="text" placeholder="Name" value={tempNames.ginger} onChange={e => setTempNames({ ...tempNames, ginger: e.target.value })} className="name-input" />
+          {/* V2: Player Name Input */}
+          <div style={{ marginBottom: '30px', textAlign: 'center' }}>
+            <label style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#5D4037', display: 'block', marginBottom: '10px' }}>YOUR NAME</label>
+            <input
+              type="text"
+              placeholder="Enter your name"
+              value={playerName}
+              onChange={e => setPlayerName(e.target.value)}
+              style={{ padding: '12px 20px', fontSize: '1.1rem', borderRadius: '10px', border: '2px solid #FFD93D', width: '300px', textAlign: 'center', fontWeight: 'bold' }}
+            />
           </div>
 
-          {/* RIGHT CAT SETUP */}
-          <div className="cat-selector">
-            <div className="cat-label">RIGHT CAT (D)</div>
-            <div className="cat-preview">
-              <Cat type={catSkins.cream} position="0" state="idle" />
+          <div style={{ display: 'flex', gap: '40px', marginBottom: '30px' }}>
+            {/* LEFT CAT SETUP */}
+            <div className="cat-selector">
+              <div className="cat-label">LEFT CAT (A)</div>
+              <div className="cat-preview">
+                <Cat type={catSkins.ginger} position="0" state="idle" />
+              </div>
+              <div className="controls">
+                <button className="arrow-btn" onClick={() => cycleSkin('ginger', -1)}>⬅️</button>
+                <span className="skin-name">{catSkins.ginger}</span>
+                <button className="arrow-btn" onClick={() => cycleSkin('ginger', 1)}>➡️</button>
+              </div>
+              <input type="text" placeholder="Name" value={tempNames.ginger} onChange={e => setTempNames({ ...tempNames, ginger: e.target.value })} className="name-input" />
             </div>
-            <div className="controls">
-              <button className="arrow-btn" onClick={() => cycleSkin('cream', -1)}>⬅️</button>
-              <span className="skin-name">{catSkins.cream}</span>
-              <button className="arrow-btn" onClick={() => cycleSkin('cream', 1)}>➡️</button>
+
+            {/* RIGHT CAT SETUP */}
+            <div className="cat-selector">
+              <div className="cat-label">RIGHT CAT (D)</div>
+              <div className="cat-preview">
+                <Cat type={catSkins.cream} position="0" state="idle" />
+              </div>
+              <div className="controls">
+                <button className="arrow-btn" onClick={() => cycleSkin('cream', -1)}>⬅️</button>
+                <span className="skin-name">{catSkins.cream}</span>
+                <button className="arrow-btn" onClick={() => cycleSkin('cream', 1)}>➡️</button>
+              </div>
+              <input type="text" placeholder="Name" value={tempNames.cream} onChange={e => setTempNames({ ...tempNames, cream: e.target.value })} className="name-input" />
             </div>
-            <input type="text" placeholder="Name" value={tempNames.cream} onChange={e => setTempNames({ ...tempNames, cream: e.target.value })} className="name-input" />
+          </div>
+
+          <button onClick={startGame} className="start-btn">START GAME</button>
+
+          <style>{`
+                  .cat-selector {
+                      display: flex; flexDirection: column; alignItems: center;
+                      background: white; padding: 20px; borderRadius: 20px;
+                      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+                  }
+                  .cat-label { marginBottom: 10px; fontWeight: bold; color: #5D4037; letter-spacing: 1px; }
+                  .cat-preview {
+                      width: 120px; height: 120px; marginBottom: 15px;
+                      display: flex; justifyContent: center; alignItems: center;
+                      transform: scale(1); transition: transform 0.2s;
+                  }
+                  .cat-selector:hover .cat-preview { transform: scale(1.1); }
+                  .controls { display: flex; align-items: center; gap: 10px; marginBottom: 15px; }
+                  .arrow-btn {
+                      background: #f0f0f0; border: none; font-size: 1.2rem; cursor: pointer;
+                      width: 40px; height: 40px; borderRadius: 50%;
+                      transition: background 0.2s, transform 0.1s;
+                  }
+                  .arrow-btn:hover { background: #e0e0e0; transform: scale(1.1); }
+                  .skin-name { font-weight: bold; color: #888; text-transform: uppercase; font-size: 0.9rem; width: 60px; text-align: center; }
+                  .name-input {
+                      padding: 10px; border: 2px solid #eee; borderRadius: 10px;
+                      text-align: center; font-size: 1rem; color: #555; width: 140px;
+                  }
+                  .name-input:focus { outline: none; border-color: #FF8BA7; }
+                  .start-btn {
+                      padding: 15px 50px; fontSize: 1.5rem; background: #FF8BA7;
+                      color: white; border: none; borderRadius: 50px; cursor: pointer;
+                      box-shadow: 0 5px 15px rgba(255,139,167,0.4);
+                      transition: all 0.2s;
+                  }
+                  .start-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(255,139,167,0.6); }
+                  .start-btn:active { transform: translateY(1px); }
+              `}</style>
+        </div>
+      );
+    }
+
+    if (gameState === 'victory') {
+      return (
+        <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', background: 'var(--color-bg)' }}>
+          <h1 style={{ color: '#FFD93D', fontSize: '3rem', textShadow: '3px 3px 0 #333' }}>VICTORY!</h1>
+          <div style={{ fontSize: '2rem', marginBottom: '10px', fontFamily: 'monospace' }}>SCORE: {score}</div>
+          <div style={{ fontSize: '1.2rem', marginBottom: '10px', color: '#555' }}>Player: <b>{playerName}</b></div>
+          <div style={{ fontSize: '1rem', marginBottom: '30px', color: '#888' }}>
+            Cats: <b>{catNames.ginger}</b> & <b>{catNames.cream}</b>
+          </div>
+
+          <div style={{ position: 'relative', width: '300px', height: '200px' }}>
+            <Cat type={catSkins.ginger} position="35%" state="happy" />
+            <Cat type={catSkins.cream} position="65%" state="happy" />
+            <svg style={{ position: 'absolute', bottom: '80px', left: '50%', transform: 'translateX(-50%)', width: '100px', height: '100px', overflow: 'visible' }}>
+              <path d="M50,90 C10,50 -10,20 25,5 S50,40 50,40 S75,-5 110,5 S90,50 50,90" fill="#FF8BA7" />
+            </svg>
+          </div>
+
+          <div style={{ marginTop: '30px', textAlign: 'center' }}>
+            <div style={{ fontSize: '1rem', marginBottom: '20px', color: '#4CAF50', fontWeight: 'bold' }}>
+              📧 Score sent to admin automatically!
+            </div>
+            <button onClick={() => window.location.reload()} style={{ marginTop: '10px', padding: '15px 30px', background: ' #FFD93D', color: '#333', borderRadius: '20px', border: 'none', cursor: 'pointer' }}>PLAY AGAIN</button>
           </div>
         </div>
+      );
+    }
 
-        <button onClick={startGame} className="start-btn">START GAME</button>
+    if (gameState === 'gameover') {
+      return (
+        <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}>
+          <h1 style={{ color: '#ff6b6b', fontSize: '4rem', textShadow: '4px 4px 0 #000', margin: 0 }}>GAME OVER</h1>
+          <div style={{ fontSize: '2rem', marginTop: '20px', marginBottom: '10px', fontFamily: 'monospace', color: 'white' }}>FINAL SCORE: {score}</div>
+          <div style={{ fontSize: '1.2rem', marginBottom: '30px', color: '#ddd' }}>Player: <b>{playerName}</b></div>
+          <div style={{ fontSize: '1rem', marginTop: '10px', color: '#b3e5fc' }}>📧 Score sent to admin automatically</div>
 
-        <style>{`
-                .cat-selector {
-                    display: flex; flexDirection: column; alignItems: center;
-                    background: white; padding: 20px; borderRadius: 20px;
-                    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-                }
-                .cat-label { marginBottom: 10px; fontWeight: bold; color: #5D4037; letter-spacing: 1px; }
-                .cat-preview {
-                    width: 120px; height: 120px; marginBottom: 15px;
-                    display: flex; justifyContent: center; alignItems: center;
-                    transform: scale(1); transition: transform 0.2s;
-                }
-                .cat-selector:hover .cat-preview { transform: scale(1.1); }
-                .controls { display: flex; align-items: center; gap: 10px; marginBottom: 15px; }
-                .arrow-btn {
-                    background: #f0f0f0; border: none; font-size: 1.2rem; cursor: pointer;
-                    width: 40px; height: 40px; borderRadius: 50%;
-                    transition: background 0.2s, transform 0.1s;
-                }
-                .arrow-btn:hover { background: #e0e0e0; transform: scale(1.1); }
-                .skin-name { font-weight: bold; color: #888; text-transform: uppercase; font-size: 0.9rem; width: 60px; text-align: center; }
-                .name-input {
-                    padding: 10px; border: 2px solid #eee; borderRadius: 10px;
-                    text-align: center; font-size: 1rem; color: #555; width: 140px;
-                }
-                .name-input:focus { outline: none; border-color: #FF8BA7; }
-                .start-btn {
-                    padding: 15px 50px; fontSize: 1.5rem; background: #FF8BA7;
-                    color: white; border: none; borderRadius: 50px; cursor: pointer;
-                    box-shadow: 0 5px 15px rgba(255,139,167,0.4);
-                    transition: all 0.2s;
-                }
-                .start-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(255,139,167,0.6); }
-                .start-btn:active { transform: translateY(1px); }
-            `}</style>
-      </div>
-    );
-  }
+          <button onClick={() => window.location.reload()} style={{ marginTop: '30px', padding: '15px 40px', background: '#4CAF50', color: 'white', border: 'none', borderRadius: '10px', cursor: 'pointer', fontSize: '1.2rem' }}>TRY AGAIN</button>
+        </div>
+      );
+    }
 
-  if (gameState === 'victory') {
+    // PLAYING STATE
     return (
-      <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', background: 'var(--color-bg)' }}>
-        <h1 style={{ color: '#FFD93D', fontSize: '3rem', textShadow: '3px 3px 0 #333' }}>VICTORY!</h1>
-        <div style={{ fontSize: '2rem', marginBottom: '10px', fontFamily: 'monospace' }}>SCORE: {score}</div>
-        <div style={{ fontSize: '1.2rem', marginBottom: '10px', color: '#555' }}>Player: <b>{playerName}</b></div>
-        <div style={{ fontSize: '1rem', marginBottom: '30px', color: '#888' }}>
-          Cats: <b>{catNames.ginger}</b> & <b>{catNames.cream}</b>
-        </div>
-
-        <div style={{ position: 'relative', width: '300px', height: '200px' }}>
-          <Cat type={catSkins.ginger} position="35%" state="happy" />
-          <Cat type={catSkins.cream} position="65%" state="happy" />
-          <svg style={{ position: 'absolute', bottom: '80px', left: '50%', transform: 'translateX(-50%)', width: '100px', height: '100px', overflow: 'visible' }}>
-            <path d="M50,90 C10,50 -10,20 25,5 S50,40 50,40 S75,-5 110,5 S90,50 50,90" fill="#FF8BA7" />
-          </svg>
-        </div>
-
-        <div style={{ marginTop: '30px', textAlign: 'center' }}>
-          <div style={{ fontSize: '1rem', marginBottom: '20px', color: '#4CAF50', fontWeight: 'bold' }}>
-            📧 Score sent to admin automatically!
-          </div>
-          <button onClick={() => window.location.reload()} style={{ marginTop: '10px', padding: '15px 30px', background: ' #FFD93D', color: '#333', borderRadius: '20px', border: 'none', cursor: 'pointer' }}>PLAY AGAIN</button>
-        </div>
-      </div>
-    );
-  }
-
-  // V2: GAME OVER SCREEN
-  if (gameState === 'gameover') {
-    return (
-      <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}>
-        <h1 style={{ color: '#ff6b6b', fontSize: '4rem', textShadow: '4px 4px 0 #000', margin: 0 }}>GAME OVER</h1>
-        <div style={{ fontSize: '2rem', marginTop: '20px', marginBottom: '10px', fontFamily: 'monospace', color: 'white' }}>FINAL SCORE: {score}</div>
-        <div style={{ fontSize: '1.2rem', marginBottom: '30px', color: '#ddd' }}>Player: <b>{playerName}</b></div>
-        <div style={{ fontSize: '1rem', marginTop: '10px', color: '#b3e5fc' }}>📧 Score sent to admin automatically</div>
-
-        <button onClick={() => window.location.reload()} style={{ marginTop: '30px', padding: '15px 40px', background: '#4CAF50', color: 'white', border: 'none', borderRadius: '10px', cursor: 'pointer', fontSize: '1.2rem' }}>TRY AGAIN</button>
-      </div>
-    );
-  }
-
-  return (
-    <>
       <div className={`game-container ${shake ? 'shake' : ''}`} style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden', touchAction: 'none' }}>
         {/* V2 HUD */}
         <div style={{ position: 'absolute', top: 10, width: '100%', textAlign: 'center', zIndex: 50, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -641,55 +641,63 @@ function App() {
 
           <CheerleaderSystem cheers={cheers} />
         </div>
+      </div>
+    );
+  };
 
+  // --- FINAL RENDER ---
+  return (
+    <>
+      {/* 1. The Game Content (changes based on state) */}
+      {renderContent()}
 
+      {/* 2. Global Mobile Controls (Only present in playing state) */}
+      {gameState === 'playing' && (
+        <div className="mobile-controls">
+          {/* Left Control */}
+          <div style={{ pointerEvents: 'auto', position: 'absolute', bottom: '20px', left: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <button onPointerDown={onLeftBtn} className="control-btn" style={{
+              width: '120px', height: '120px', borderRadius: '50%',
+              background: '#FFB38A', border: '4px solid white',
+              fontSize: '1rem', fontWeight: 'bold', color: 'white',
+              boxShadow: '0 5px 0 #C4765A',
+              display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+              touchAction: 'none'
+            }}>
+              {catNames.ginger} <span style={{ fontSize: '1.5rem', fontWeight: '900' }}>(A)</span>
+            </button>
+            <div style={{ marginTop: '5px', fontSize: '1.2rem', textShadow: '1px 1px 0 white' }}>
+              {Array.from({ length: gingerLives }).map((_, i) => <span key={i}>❤️</span>)} {gingerLives === 0 && '💀'}
+            </div>
+          </div>
 
-      </div >
+          {/* Right Control */}
+          <div style={{ pointerEvents: 'auto', position: 'absolute', bottom: '20px', right: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <button onPointerDown={onRightBtn} className="control-btn" style={{
+              width: '120px', height: '120px', borderRadius: '50%',
+              background: '#FDF0D5', border: '4px solid white',
+              fontSize: '1rem', fontWeight: 'bold', color: '#5D4037',
+              boxShadow: '0 5px 0 #C4AA7A',
+              display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+              touchAction: 'none'
+            }}>
+              {catNames.cream} <span style={{ fontSize: '1.5rem', fontWeight: '900' }}>(D)</span>
+            </button>
+            <div style={{ marginTop: '5px', fontSize: '1.2rem', textShadow: '1px 1px 0 white' }}>
+              {Array.from({ length: creamLives }).map((_, i) => <span key={i}>❤️</span>)} {creamLives === 0 && '💀'}
+            </div>
+          </div>
+        </div>
+      )}
 
-      {/* V2 Mobile: Force Landscape Overlay (CSS Based) */}
+      {/* 3. Global Landscape Overlay (Always active via CSS) */}
       <div className="landscape-overlay">
         <div style={{ fontSize: '4rem', marginBottom: '20px' }}>📱➡️🔄</div>
         <h1 style={{ marginBottom: '10px' }}>PLEASE ROTATE DEVICE</h1>
         <p>This game is designed for Landscape Mode.</p>
       </div>
 
-      {/* V2 Mobile: Optimized Controls (Fixed Viewport) */}
-      <div className="mobile-controls">
-        {/* Left Control */}
-        <div style={{ pointerEvents: 'auto', position: 'absolute', bottom: '20px', left: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <button onPointerDown={onLeftBtn} className="control-btn" style={{
-            width: '120px', height: '120px', borderRadius: '50%',
-            background: '#FFB38A', border: '4px solid white',
-            fontSize: '1rem', fontWeight: 'bold', color: 'white',
-            boxShadow: '0 5px 0 #C4765A',
-            display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-            touchAction: 'none'
-          }}>
-            {catNames.ginger} <span style={{ fontSize: '1.5rem', fontWeight: '900' }}>(A)</span>
-          </button>
-          <div style={{ marginTop: '5px', fontSize: '1.2rem', textShadow: '1px 1px 0 white' }}>
-            {Array.from({ length: gingerLives }).map((_, i) => <span key={i}>❤️</span>)} {gingerLives === 0 && '💀'}
-          </div>
-        </div>
-
-        {/* Right Control */}
-        <div style={{ pointerEvents: 'auto', position: 'absolute', bottom: '20px', right: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <button onPointerDown={onRightBtn} className="control-btn" style={{
-            width: '120px', height: '120px', borderRadius: '50%',
-            background: '#FDF0D5', border: '4px solid white',
-            fontSize: '1rem', fontWeight: 'bold', color: '#5D4037',
-            boxShadow: '0 5px 0 #C4AA7A',
-            display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-            touchAction: 'none'
-          }}>
-            {catNames.cream} <span style={{ fontSize: '1.5rem', fontWeight: '900' }}>(D)</span>
-          </button>
-          <div style={{ marginTop: '5px', fontSize: '1.2rem', textShadow: '1px 1px 0 white' }}>
-            {Array.from({ length: creamLives }).map((_, i) => <span key={i}>❤️</span>)} {creamLives === 0 && '💀'}
-          </div>
-        </div>
-      </div>
-
+      {/* 4. Global Styles */}
       <style>{`
       .control-btn:active { transform: translateY(5px); box-shadow: 0 0 0 transparent; }
       .shake { animation: shake-anim 0.2s; }
@@ -713,7 +721,7 @@ function App() {
         position: fixed;
         top: 0; left: 0; width: 100%; height: 100%;
         background: rgba(0,0,0,0.95);
-        z-index: 10000;
+        z-index: 20000; /* Highest Z-Index */
         flex-direction: column;
         justify-content: center;
         align-items: center;
