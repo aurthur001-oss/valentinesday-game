@@ -521,8 +521,9 @@ function App() {
                   }
                   .cat-label { marginBottom: 5px; fontWeight: bold; color: #5D4037; letter-spacing: 1px; fontSize: 1rem; }
                   .cat-preview {
-                      width: 10vh; height: 10vh; marginBottom: 10px; /* Responsive based on height */
-                      min-width: 80px; min-height: 80px;
+                      width: 6vh; height: 6vh; marginBottom: 5px; /* Smaller for mobile */
+                      min-width: 50px; min-height: 50px;
+                      max-width: 70px; max-height: 70px;
                       display: flex; justifyContent: center; alignItems: center;
                       transform: scale(1); transition: transform 0.2s;
                   }
@@ -552,8 +553,8 @@ function App() {
 
                   /* Mobile Landscape Specific Adjustments */
                   @media (max-height: 500px) {
-                    .cat-selector { padding: 10px; transform: scale(0.85); margin: 0 5px; }
-                    .cat-preview { width: 8vh; height: 8vh; min-width: 60px; min-height: 60px; marginBottom: 5px; }
+                    .cat-selector { padding: 5px; transform: scale(0.75); margin: 0 3px; }
+                    .cat-preview { width: 5vh; height: 5vh; min-width: 40px; min-height: 40px; max-width: 50px; max-height: 50px; marginBottom: 2px; }
                     h1 { font-size: 1.8rem !important; margin-bottom: 0.5rem !important; }
                     p { margin-bottom: 0.5rem !important; display: none; } /* Hide subtext on small screens */
                     input[type="text"] { padding: 8px !important; width: 200px !important; }
@@ -586,7 +587,7 @@ function App() {
 
           <div style={{ marginTop: '30px', textAlign: 'center' }}>
             <div style={{ fontSize: '1rem', marginBottom: '20px', color: '#4CAF50', fontWeight: 'bold' }}>
-              📧 Score sent to admin automatically!
+              Game Over!
             </div>
             <button onClick={() => window.location.reload()} style={{ marginTop: '10px', padding: '15px 30px', background: ' #FFD93D', color: '#333', borderRadius: '20px', border: 'none', cursor: 'pointer' }}>PLAY AGAIN</button>
           </div>
@@ -600,7 +601,7 @@ function App() {
           <h1 style={{ color: '#ff6b6b', fontSize: '4rem', textShadow: '4px 4px 0 #000', margin: 0 }}>GAME OVER</h1>
           <div style={{ fontSize: '2rem', marginTop: '20px', marginBottom: '10px', fontFamily: 'monospace', color: 'white' }}>FINAL SCORE: {score}</div>
           <div style={{ fontSize: '1.2rem', marginBottom: '30px', color: '#ddd' }}>Player: <b>{playerName}</b></div>
-          <div style={{ fontSize: '1rem', marginTop: '10px', color: '#b3e5fc' }}>📧 Score sent to admin automatically</div>
+          <div style={{ fontSize: '1rem', marginTop: '10px', color: '#b3e5fc' }}>Thanks for playing!</div>
 
           <button onClick={() => window.location.reload()} style={{ marginTop: '30px', padding: '15px 40px', background: '#4CAF50', color: 'white', border: 'none', borderRadius: '10px', cursor: 'pointer', fontSize: '1.2rem' }}>TRY AGAIN</button>
         </div>
